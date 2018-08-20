@@ -3,17 +3,17 @@ var cardsch = require('../models/cardSchema');
 var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
-var uniqid = require('uniqid');
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 router.post('/createNewCard', (req, res) => {
   var userid = req.body.userid;
+  var uniqid = Math.floor(10000000000 + Math.random() * 90000000000)
   var pin = Math.floor(1000 + Math.random() * 9000); if (!userid) {
     return res.status(422).json({ success: false, msg: 'userID not Provided' });
   } else {
     let newCard = new cardsch({
       userid: userid,
-      card_number: uniqid(),
+      card_number: uniqid,
       pin: pin,
     })
     newCard.save((err, card) => {
